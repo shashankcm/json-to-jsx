@@ -38,6 +38,19 @@ class HomePage extends React.Component {
     ); */
     return (
       <div className="container-fluid">
+        <FormElement
+          htmlElements={this.state.formData}
+          steps={this.state.steps}
+        />
+      </div>
+    );
+  }
+}
+
+export default HomePage;
+
+{
+  /* <div className="container-fluid">
         {this.state.steps.length > 0
           ? this.state.steps.map(i => (
               <FormElement
@@ -45,9 +58,5 @@ class HomePage extends React.Component {
               />
             ))
           : null}
-      </div>
-    );
-  }
+      </div> */
 }
-
-export default HomePage;
