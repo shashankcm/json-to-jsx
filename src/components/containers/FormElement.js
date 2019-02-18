@@ -58,10 +58,8 @@ class FormElement extends React.Component {
     );
   };
   handleChange(e) {
-    //console.log("HandleChange Called");
     let value = e.target.value;
     let name = e.target.name;
-    //console.log("value", value, "name", name);
     this.setState(
       prevState => ({ newUser: { ...prevState.newUser, [name]: value } }),
       () => console.log(this.state.newUser)
@@ -71,37 +69,11 @@ class FormElement extends React.Component {
     e.preventDefault();
     console.log("Final Values", this.state);
   };
-
-  componentDidMount() {
-    /* const props = this.props;
-    let completeData = props.htmlElements;
-
-    if (completeData.length > 0) {
-      if (
-        this.state.steps.length > 0 &&
-        this.state.stepCount < this.state.steps.length
-      ) {
-        this.setState(prevState => ({ stepCount: prevState.stepCount + 1 }));
-      }
-    } */
-  }
   handleFormPage = () => {
     const props = this.props;
     let completeData = props.htmlElements;
 
     if (completeData.length > 0) {
-      /* if (
-        this.state.steps.length > 0 &&
-        this.state.steps.length > this.state.stepCount
-      ) {
-        console.log(
-          this.state.steps.length,
-          this.state.stepCount,
-          this.state.steps.length,
-          "State in handle Form"
-        );
-        this.setState(prevState => ({ stepCount: prevState.stepCount + 1 }));
-      } */
       this.setState(prevState => ({ stepCount: prevState.stepCount + 1 }));
     }
   };
@@ -109,19 +81,50 @@ class FormElement extends React.Component {
     //let currentStepCount = this.state.stepCount
     this.setState(prevState => ({ stepCount: prevState.stepCount - 1 }));
   };
+
+  getNavStyles = (indx, length) => {
+    let styles = [];
+    for (let i = 0; i < length; i++) {
+      if (i < indx) {
+        styles.push("done");
+      } else if (i === indx) {
+        styles.push("doing");
+      } else {
+        styles.push("todo");
+      }
+    }
+    return styles;
+  };
   render() {
     const props = this.props;
 
     let completeData = props.htmlElements,
       htmlNodes = "",
       singleItem = "";
-
-    /* completeData.map(oneItem => {
-      return (singleItem = oneItem);
-    }); */
-
     singleItem = completeData[this.state.stepCount];
-    console.log(this.state, "State in render");
+    console.log(this.props, "State in render");
+
+    let stepsDisplay = (
+      <ol className="progtrckr">
+        {this.state.steps.map((s, i) => (
+          <li
+            key={i}
+            className={
+              "progtrckr-" +
+              this.getNavStyles(this.state.stepCount, this.state.steps.length)[
+                i
+              ]
+            }
+            style={{ listStyleType: "none" }}
+          >
+            {this.state.steps[i] + 1}
+          </li>
+        ))}
+      </ol>
+    );
+    console.log(
+      this.getNavStyles(this.state.stepCount, this.state.steps.length)
+    );
 
     if (this.state.stepCount < this.state.steps.length) {
       htmlNodes = (
@@ -148,7 +151,7 @@ class FormElement extends React.Component {
                             id={fe.name}
                             type={fe.type}
                             placeholder={fe.placeholder}
-                            value={this.state.newUser[fe.name]}
+                            //value={this.state.newUser[fe.name]}
                             handleChange={this.handleChange.bind(this)}
                             caption={fe.caption}
                           />
@@ -194,7 +197,7 @@ class FormElement extends React.Component {
                 this.state.stepCount <= 0
                   ? "btn btn-secondary btn-lg float-left"
                   : "btn btn-primary btn-lg float-left"
-              } //this.state.steps.length < 0 ? true : false
+              }
               disabled={this.state.stepCount <= 0}
               onClick={this.handlePrevFormPage}
             >
@@ -220,10 +223,9 @@ class FormElement extends React.Component {
     } else {
       htmlNodes = <div>No Page Found</div>;
     }
-    //console.log(htmlNodes);
     return (
       <div>
-        {/* {stepsDisplay} */}
+        {stepsDisplay}
         {htmlNodes}
       </div>
     );

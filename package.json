@@ -35,6 +35,7 @@
     "object-assign": "4.1.1",
     "react": "16.4.2",
     "react-dom": "16.4.2",
+    "react-multistep": "3.3.3",
     "react-radio-buttons": "1.2.2",
     "react-redux": "5.0.7",
     "react-router-dom": "4.3.1",

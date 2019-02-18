@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 
 import formData from "../../data/mockData";
 import FormElement from "../containers/FormElement";
@@ -17,27 +16,10 @@ class HomePage extends React.Component {
       percentageCompleted: 0
     };
   }
-  componentDidMount() {
-    //this.processFormData();
-  }
-  processFormData() {
-    let indexValues = [];
-    this.state.formData.map((item, index) => {
-      indexValues.push(index);
-    });
-    //console.log(indexValues);
-    this.setState(state => {
-      return { steps: state.steps + indexValues.length };
-    });
-  }
   render() {
-    /* console.log(
-      this.state.formData[this.state.steps[0]],
-      this.state.formData,
-      this.state.steps
-    ); */
     return (
       <div className="container-fluid">
+        {/* <Percentage /> */}
         <FormElement
           htmlElements={this.state.formData}
           steps={this.state.steps}
