@@ -286,6 +286,7 @@ class FormElement extends React.Component {
               return (
                 <div key={index} className="form-group row">
                   {it.fields.map((fe, index) => {
+                    console.log("Props", fe);
                     return (
                       <div key={index} className="col-md-6">
                         {fe.component === "input" ? (

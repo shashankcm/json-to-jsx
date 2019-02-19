@@ -69,6 +69,7 @@ const mockGraphqlData = [
             component: "select",
             caption: "Marital Status",
             options: [
+              { value: "Please-Select", title: "Please-Select" },
               { value: "MARRIED", title: "Married" },
               { value: "DIVORCED", title: "Divorced" },
               { value: "WINDOW", title: "Window" },
