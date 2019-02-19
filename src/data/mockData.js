@@ -117,13 +117,13 @@ const mockGraphqlData = [
             name: "state",
             component: "input",
             type: "text",
-            caption: "state"
+            caption: "State"
           },
           {
             name: "zip",
             component: "input",
             type: "number",
-            caption: "Zip"
+            caption: "Zip Code"
           },
           {
             name: "monthOfMove",

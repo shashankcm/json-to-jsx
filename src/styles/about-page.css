@@ -88,3 +88,102 @@ ol.progtrckr li.progtrckr-done:before {
 ol.progtrckr li.progtrckr-done:hover:before {
   color: #0fa0ce;
 }
+
+body {
+  background-color: #eee;
+}
+.jss447 {
+  color: rgba(0, 0, 0, 0.87);
+  width: 100%;
+  border: 0;
+  display: flex;
+  position: relative;
+  min-width: 0;
+  word-wrap: break-word;
+  font-size: 0.875rem;
+  margin-top: 30px;
+  background: #fff;
+  box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+  margin-bottom: 30px;
+  border-radius: 6px;
+  flex-direction: column;
+}
+.jss1780 {
+  flex: 1 1 auto;
+  padding: 0.9375rem 20px;
+  position: relative;
+  -webkit-box-flex: 1;
+}
+.jss1421 {
+  position: relative;
+}
+.jss1422 {
+  margin-top: 20px;
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 0;
+  background-color: rgba(200, 200, 200, 0.2);
+}
+.jss1423 {
+  display: inline-block;
+  position: relative;
+  text-align: center;
+  margin-left: 0;
+}
+.jss1424 {
+  color: #555555 !important;
+  cursor: pointer;
+  border: 0 !important;
+  display: block;
+  padding: 10px 15px;
+  position: relative;
+  font-size: 12px;
+  min-width: 100px;
+  transition: all 0.3s;
+  text-align: center;
+  line-height: 18px;
+  font-weight: 500;
+  border-radius: 30px;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.jss1428 {
+  top: -4px;
+  left: 0px;
+  color: #fff;
+  cursor: pointer;
+  padding: 12px;
+  position: absolute;
+  font-size: 12px;
+  text-align: center;
+  font-weight: 500;
+  border-radius: 4px;
+  text-transform: uppercase;
+  -webkit-font-smoothing: subpixel-antialiased;
+}
+.jss1434 {
+  box-shadow: 0 4px 20px 0px rgba(0, 0, 0, 0.14),
+    0 7px 10px -5px rgba(233, 30, 99, 0.4);
+  background-color: #e91e63;
+}
+
+.customTrans {
+  transition: all 0.5s cubic-bezier(0.29, 1.42, 0.79, 1) 0s;
+  width: 130px;
+  transform: translate3d(-8px, 0px, 0px);
+}
+
+.movingTab {
+  position: "absolute";
+  text-align: "center";
+  padding: "12px";
+  font-size: "12px";
+  text-transform: "uppercase";
+  -webkit-font-smoothing: subpixel-antialiased;
+  top: "-4px";
+  left: "0px";
+  border-radius: "4px";
+  color: white;
+  cursor: "pointer";
+  font-weight: "500";
+}
