@@ -1,5 +1,8 @@
 import React from "react";
 import { RadioGroup, RadioButton } from "react-radio-buttons";
+import { connect } from "react-redux";
+import { bindActionCreators } from "redux";
+import * as actions from "../../actions/personalInformationActions";
 
 import {
   Input,
@@ -39,7 +42,7 @@ class FormElement extends React.Component {
       movingTabStyle: {
         transition: "transform 0s"
       },
-      allStates: {}
+      loadSubmitedPage: false
     };
     this.updateWidth = this.updateWidth.bind(this);
   }
@@ -140,21 +143,36 @@ class FormElement extends React.Component {
     });
     let name = lableName;
     this.setState(
-      prevState => ({ newUser: { ...prevState.newUser, [name]: value } }),
-      () => console.log(this.state.newUser)
+      prevState => ({ newUser: { ...prevState.newUser, [name]: value } })
+      //,() => console.log(this.state.newUser)
     );
   };
   handleChange(e) {
     let value = e.target.value;
     let name = e.target.name;
+    e.persist();
     this.setState(
-      prevState => ({ newUser: { ...prevState.newUser, [name]: value } }),
-      () => console.log(this.state.newUser)
+      prevState => ({ newUser: { ...prevState.newUser, [name]: value } })
+      //,() => console.log(this.state.newUser)
     );
   }
   handleSubmit = e => {
+    //console.log("Final Values", this.state);
     e.preventDefault();
-    console.log("Final Values", this.state);
+    let finalData = {
+      finalData: this.state.newUser
+    };
+    if (
+      Object.entries(finalData.finalData).length === 0 &&
+      finalData.finalData.constructor === Object
+    ) {
+      this.setState({ loadSubmitedPage: false });
+    } else {
+      this.setState(prevState => ({
+        loadSubmitedPage: !prevState.loadSubmitedPage
+      }));
+      this.props.actions.savePersonalInformation(finalData);
+    }
   };
   handleFormPage = () => {
     const props = this.props;
@@ -166,6 +184,8 @@ class FormElement extends React.Component {
         () => this.refreshAnimation(this.state.stepCount)
       );
     }
+    this.myFormRef.reset();
+    //e.target.value = "";
   };
   handlePrevFormPage = () => {
     //let currentStepCount = this.state.stepCount
@@ -173,6 +193,7 @@ class FormElement extends React.Component {
       prevState => ({ stepCount: prevState.stepCount - 1 }),
       () => this.refreshAnimation(this.state.stepCount)
     );
+    this.myFormRef.reset();
   };
 
   getNavStyles = (indx, length) => {
@@ -212,7 +233,6 @@ class FormElement extends React.Component {
       htmlNodes = "",
       singleItem = "";
     singleItem = completeData[this.state.stepCount];
-    //console.log(this.state.allStates, "State in render");
 
     /* let stepsDisplay = (
       <ol className="progtrckr">
@@ -269,14 +289,14 @@ class FormElement extends React.Component {
     if (this.state.stepCount < this.state.steps.length) {
       htmlNodes = (
         <div className="jss447 jss1780">
-          <form onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit} ref={el => (this.myFormRef = el)}>
             {/* <h3>{item.name}</h3> */}
             {/* <h1>{item.title}</h1> */}
             {singleItem.sections.map((it, index) => {
               return (
                 <div key={index} className="form-row">
                   <h3 style={{ fontWeight: "400", margin: "20px 0px" }}>
-                    <strong>Step {this.state.steps[index] + 1}</strong> -{" "}
+                    <strong>Step {this.state.stepCount + 1}</strong> -{" "}
                     {it.caption}
                   </h3>
                 </div>
@@ -286,7 +306,6 @@ class FormElement extends React.Component {
               return (
                 <div key={index} className="form-group row">
                   {it.fields.map((fe, index) => {
-                    console.log("Props", fe);
                     return (
                       <div key={index} className="col-md-6">
                         {fe.component === "input" ? (
@@ -295,7 +314,7 @@ class FormElement extends React.Component {
                             id={fe.name}
                             type={fe.type}
                             placeholder={fe.placeholder}
-                            //value={this.state.newUser[fe.name]}
+                            value={this.state.newUser[fe.name]}
                             handleChange={this.handleChange.bind(this)}
                             caption={fe.caption}
                           />
@@ -307,6 +326,7 @@ class FormElement extends React.Component {
                             placeholder={fe.placeholder}
                             options={fe.options}
                             caption={fe.caption}
+                            value={this.state.newUser[fe.name]}
                           />
                         ) : fe.component === "checkbox" ? (
                           <Checkbox
@@ -328,6 +348,11 @@ class FormElement extends React.Component {
                                 );
                               })}
                             </RadioGroup>
+                            {this.state.newUser.gender === "FEMALE" ? (
+                              <div>Hello Female welcom </div>
+                            ) : (
+                              ""
+                            )}
                           </React.Fragment>
                         ) : null}
                       </div>
@@ -355,11 +380,12 @@ class FormElement extends React.Component {
                 onClick={this.handleFormPage}
               />
             ) : (
-              <input
-                type="button"
-                value="submit"
+              <button
+                type="submit"
                 className="btn btn-primary btn-lg float-right"
-              />
+              >
+                Submit
+              </button>
             )}
           </form>
         </div>
@@ -367,12 +393,52 @@ class FormElement extends React.Component {
     } else {
       htmlNodes = <div>No Page Found</div>;
     }
+    //console.log(this.state.loadSubmitedPage, this.props.piApiResponse);
+
     return (
       <div ref="wizard">
-        {stepsDisplay}
-        {htmlNodes}
+        {/* {Object.entries(this.props.personalInfo).length === 0 &&
+        this.props.personalInfo.constructor === Object ? (
+          <div>
+            {stepsDisplay}
+            {htmlNodes}
+          </div>
+        ) : (
+          <div>Information Submitted Thanks</div>
+        )} */}
+
+        {this.state.loadSubmitedPage === false ? (
+          <div>
+            {stepsDisplay}
+            {htmlNodes}
+          </div>
+        ) : (
+          <div className="jss447 jss1780">
+            <h1>Information Submitted Thanks</h1>
+            <pre>{JSON.stringify(this.state.newUser, null, 2)}</pre>
+          </div>
+        )}
       </div>
     );
   }
 }
-export default FormElement;
+
+function mapStateToProps(state) {
+  return {
+    piApiResponse:
+      state.piApiResponse.piApiResponse != undefined
+        ? state.piApiResponse.piApiResponse
+        : ""
+  };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    actions: bindActionCreators(actions, dispatch)
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(FormElement);

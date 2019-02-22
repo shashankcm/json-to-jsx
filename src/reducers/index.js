@@ -1,8 +1,8 @@
-import { combineReducers } from 'redux';
-import fuelSavings from './fuelSavingsReducer';
+import { combineReducers } from "redux";
+import piApiResponse from "./personalInformationReducer";
 
 const rootReducer = combineReducers({
-  fuelSavings,
+  piApiResponse
 });
 
 export default rootReducer;

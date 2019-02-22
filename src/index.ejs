@@ -49,12 +49,11 @@
   ></script>
   <!-- Prompt a message in the browser if users disabled JS -->
   <noscript>Your browser does not support JavaScript!</noscript>
-  <script>
-    if('serviceWorker' in navigator) {
-      navigator.serviceWorker
-               .register('/sw.js')
-               .then(function() { console.log("Service Worker Registered"); });
+  <!-- <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("/sw.js").then(function() {
+        console.log("Service Worker Registered");
+      });
     }
-    </script>
-
+  </script> -->
 </html>
